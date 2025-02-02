@@ -17,7 +17,7 @@ const Login = () => {
         e.preventDefault();
     
         try {
-            const response = await fetch("http://localhost:5002/auth/login", { // ปรับ URL ตามที่ backend ใช้
+            const response = await fetch("http://localhost:5001/auth/login", { // ปรับ URL ตามที่ backend ใช้
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

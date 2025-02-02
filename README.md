@@ -1,115 +1,128 @@
-# Project Setup Guide
+# Project Name
 
-## Table of Contents
-- [Backend Setup](#backend-setup)
-  - [Without Docker](#without-docker)
-  - [Using Docker](#using-docker)
-- [Frontend Setup](#frontend-setup)
-  - [Without Docker](#without-docker-1)
-  - [Using Docker](#using-docker-1)
+## Description
+This project consists of a frontend and backend. The backend is built using Node.js and the frontend uses your preferred framework (e.g., React). This document explains how to set up, run, and deploy both the frontend and backend using Docker.
 
----
+## Prerequisites
 
-## Backend Setup
+Before you begin, make sure you have the following installed:
+- Docker: [Installation Guide](https://docs.docker.com/get-docker/)
+- Node.js (for local development): [Installation Guide](https://nodejs.org/)
+- Docker Compose: [Installation Guide](https://docs.docker.com/compose/install/)
 
-### Without Docker
+## Project Setup
 
-#### 1. Prerequisites
-- Install [Node.js](https://nodejs.org/)
-- Install [MongoDB](https://www.mongodb.com/) (if using a database)
+### 1. Backend Setup
 
-#### 2. Install Dependencies
-```sh
-cd backend
-npm install
-```
+#### Local Development
 
-#### 3. Create an Environment File
-Create a `.env` file in the `backend` directory with the following content:
-```env
-PORT=5001
-SECRET_KEY=your-secret-key
-```
+1. Go to the backend folder:
+    ```bash
+    cd backend
+    ```
 
-#### 4. Start the Server
-```sh
-npm start
-```
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-The backend should now be running on `http://localhost:5001`.
+3. Start the backend server:
+    ```bash
+    node src/app.js
+    ```
 
----
+    The server will be running at `http://localhost:5001`.
 
-### Using Docker
+#### Docker Setup
 
-#### 1. Build the Docker Image
-```sh
-cd backend
-docker build -t backend-app .
-```
+To run the backend using Docker, follow these steps:
 
-#### 2. Run the Container
-```sh
-docker run -d -p 5001:5001 --name backend-container backend-app
-```
+1. Build the Docker image:
+    ```bash
+    docker build -t backend .
+    ```
 
-Check if the container is running:
-```sh
-docker ps
-```
+2. Run the backend container:
+    ```bash
+    docker run -d -p 5001:5001 backend
+    ```
 
-The backend should be accessible at `http://localhost:5001`.
+    The backend will be accessible at `http://localhost:5001`.
 
----
+### 2. Frontend Setup
 
-## Frontend Setup
+#### Local Development
 
-### Without Docker
+1. Go to the frontend folder:
+    ```bash
+    cd frontend
+    ```
 
-#### 1. Prerequisites
-- Install [Node.js](https://nodejs.org/)
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-#### 2. Install Dependencies
-```sh
-cd frontend
-npm install
-```
+3. Start the development server:
+    ```bash
+    npm run dev
+    ```
 
-#### 3. Start the Frontend
-```sh
-npm run dev
-```
+    The frontend will be available at `http://localhost:5174`.
 
-The frontend should now be running on `http://localhost:5173` (or another available port).
+#### Docker Setup
 
----
+To run the frontend using Docker, follow these steps:
 
-### Using Docker
+1. Build the Docker image:
+    ```bash
+    docker build -t frontend .
+    ```
 
-#### 1. Build the Docker Image
-```sh
-cd frontend
-docker build -t frontend-app .
-```
+2. Run the frontend container:
+    ```bash
+    docker run -d -p 80:80 frontend
+    ```
 
-#### 2. Run the Container
-```sh
-docker run -d -p 5173:5173 --name frontend-container frontend-app
-```
+    The frontend will be accessible at `http://localhost`.
 
-Check if the container is running:
-```sh
-docker ps
-```
+### 3. Running with Docker Compose
 
-The frontend should be accessible at `http://localhost:5173`.
+To simplify running both the frontend and backend together, you can use Docker Compose.
 
----
+1. Ensure you have a `docker-compose.yml` file at the root of your project. It should look like this:
 
-## Notes
-- Make sure the **backend** is running before starting the frontend.
-- If using **Docker**, ensure ports are correctly mapped.
-- Update `.env` files as needed for production environments.
+    ```yaml
+    version: '3'
+    services:
+      backend:
+        build:
+          context: ./backend
+          dockerfile: Dockerfile
+        ports:
+          - "5001:5001"
 
-Happy coding! 🚀
+      frontend:
+        build:
+          context: ./frontend
+          dockerfile: Dockerfile
+        ports:
+          - "80:80"
+    ```
+
+2. Build and run both services:
+    ```bash
+    docker-compose up --build
+    ```
+
+    This command will build both the frontend and backend images and run them. The frontend will be accessible at `http://localhost` and the backend will be available at `http://localhost:5001`.
+
+### 4. Testing the Application
+
+To verify that both services are working properly:
+
+- Visit `http://localhost` to check the frontend.
+- Visit `http://localhost:5001` to check if the backend is running.
+- Ensure there are no errors in the console logs.
+
 

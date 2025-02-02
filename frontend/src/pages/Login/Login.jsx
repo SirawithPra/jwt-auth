@@ -8,9 +8,8 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // ถ้ามี token อยู่แล้ว ก็ไม่ให้แสดงหน้า login
         if (localStorage.getItem("token")) {
-            navigate("/");  // เปลี่ยนไปยังหน้า Main
+            navigate("/");
         }
     }, [navigate]);
 
@@ -18,7 +17,7 @@ const Login = () => {
         e.preventDefault();
     
         try {
-            const response = await fetch("http://localhost:5001/auth/login", { // ปรับ URL ตามที่ backend ใช้
+            const response = await fetch("http://localhost:5002/auth/login", { // ปรับ URL ตามที่ backend ใช้
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

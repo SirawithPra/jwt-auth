@@ -17,7 +17,9 @@ const Login = () => {
         e.preventDefault();
     
         try {
-            const response = await fetch("http://localhost:5001/auth/login", { // ปรับ URL ตามที่ backend ใช้
+            const response = await fetch("https://jwt-auth-sirawith-b9f090ea74af.herokuapp.com/auth/login", { 
+            // const response = await fetch("http://localhost:5001/auth/login", {
+
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
